@@ -58,6 +58,7 @@ productSchema.post('findOneAndDelete', (doc) => {
     const filePath = path.join(__dirname, 'public', doc.image.fileName);
     if (fs.existsSync(filePath)) {
       fs.unlink(filePath, (err) => {
+        // eslint-disable-next-line no-console
         if (err) console.error('Ошибка удаления файла:', err);
       });
     }

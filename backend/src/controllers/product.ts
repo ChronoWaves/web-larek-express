@@ -53,7 +53,7 @@ export const createProduct = async (
       title, image, category, description, price,
     });
 
-    res.status(201).json(product);
+    return res.status(201).json(product);
   } catch (error) {
     if (error instanceof MongooseError.ValidationError) {
       return next(new BadRequestError(error.message));
@@ -89,7 +89,7 @@ export const updateProduct = async (
       throw new NotFoundError('Товар не найден');
     }
 
-    res.json(product);
+    return res.json(product);
   } catch (error) {
     if (error instanceof MongooseError.ValidationError) {
       return next(new BadRequestError(error.message));
@@ -117,8 +117,8 @@ export const deleteProduct = async (
       throw new NotFoundError('Товар не найден');
     }
 
-    res.json(product);
+    return res.json(product);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };

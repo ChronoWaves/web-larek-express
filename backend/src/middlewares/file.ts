@@ -1,4 +1,5 @@
-import multer from 'multer';
+import { Request } from 'express';
+import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import config from '../config';
 
@@ -22,9 +23,9 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (
-  _req: Express.Request,
-  file: Express.Multer.File,
-  cb: multer.FileFilterCallback,
+  _req: Request,
+  file: { mimetype: string; originalname: string },
+  cb: FileFilterCallback,
 ) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);

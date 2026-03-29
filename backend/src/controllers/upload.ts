@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError } from '../errors';
 
-export const uploadFile = (
+const uploadFile = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -21,3 +21,5 @@ export const uploadFile = (
     next(error);
   }
 };
+
+export default uploadFile;

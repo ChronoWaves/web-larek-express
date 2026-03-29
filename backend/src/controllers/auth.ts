@@ -1,4 +1,6 @@
-import { Request, Response, NextFunction, CookieOptions } from 'express';
+import {
+  Request, Response, NextFunction, CookieOptions,
+} from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Error as MongooseError } from 'mongoose';
@@ -51,7 +53,7 @@ export const register = async (
     });
 
     res.cookie('refreshToken', refreshToken, cookieOptions);
-    res.status(201).json({
+    return res.status(201).json({
       user: { email: user.email, name: user.name },
       success: true,
       accessToken,
@@ -92,13 +94,13 @@ export const login = async (
     });
 
     res.cookie('refreshToken', refreshToken, cookieOptions);
-    res.json({
+    return res.json({
       user: { email: user.email, name: user.name },
       success: true,
       accessToken,
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -143,13 +145,13 @@ export const refreshAccessToken = async (
     });
 
     res.cookie('refreshToken', refreshToken, cookieOptions);
-    res.json({
+    return res.json({
       user: { email: user.email, name: user.name },
       success: true,
       accessToken,
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -185,9 +187,9 @@ export const logout = async (
     }
 
     res.clearCookie('refreshToken', { ...cookieOptions, maxAge: 0 });
-    res.json({ success: true });
+    return res.json({ success: true });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -203,11 +205,11 @@ export const getCurrentUser = async (
       throw new NotFoundError('Пользователь не найден');
     }
 
-    res.json({
+    return res.json({
       user: { email: user.email, name: user.name },
       success: true,
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };

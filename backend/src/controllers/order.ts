@@ -3,14 +3,14 @@ import { faker } from '@faker-js/faker';
 import Product from '../models/product';
 import { BadRequestError } from '../errors';
 
-export const createOrder = async (
+const createOrder = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const {
-      items, total, payment, email, phone, address,
+      items, total, payment: _payment, email: _email, phone: _phone, address: _address,
     } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -49,3 +49,5 @@ export const createOrder = async (
     next(error);
   }
 };
+
+export default createOrder;
